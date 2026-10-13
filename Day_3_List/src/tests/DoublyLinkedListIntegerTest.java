@@ -104,6 +104,63 @@ class DoublyLinkedListIntegerTest {
     }
 
     @Test
+    void testDeleteElement() {
+        list.addAtLast(10);
+        list.addAtLast(20);
+        list.addAtLast(10); // Duplicate to test single deletion behavior
+
+        // Delete the first occurrence of 10
+        assertTrue(list.deleteElement(10), "Should successfully delete an existing element");
+        assertEquals(2, list.size(), "Size should reduce to 2");
+        assertTrue(list.isExists(10), "Second '10' should still exist");
+
+        // Try deleting a non-existent element
+        assertFalse(list.deleteElement(99), "Deleting non-existent element should return false");
+
+        // Delete the remaining items
+        assertTrue(list.deleteElement(20));
+        assertTrue(list.deleteElement(10));
+        assertTrue(list.isEmpty(), "List should be empty now");
+
+        // Deleting from empty list
+        assertFalse(list.deleteElement(10), "Deleting from empty list should return false");
+    }
+
+    @Test
+    void testDeleteAllElement() {
+        list.addAtLast(10);
+        list.addAtLast(20);
+        list.addAtLast(10);
+        list.addAtLast(10);
+        list.addAtLast(30);
+
+        // Delete all occurrences of 10 (3 instances)
+        assertTrue(list.deleteAllElement(10), "Should successfully delete all matching elements");
+        assertEquals(2, list.size(), "Size should reduce to 2 (20 and 30 left)");
+        assertFalse(list.isExists(10), "No '10' elements should remain");
+        assertTrue(list.isExists(20));
+        assertTrue(list.isExists(30));
+
+        // Try deleting all of something that doesn't exist
+        assertFalse(list.deleteAllElement(99), "Should return false if element is not found");
+
+        // Delete remaining elements to test clearing everything
+        assertTrue(list.deleteAllElement(20));
+        assertTrue(list.deleteAllElement(30));
+        assertTrue(list.isEmpty(), "List should be completely empty");
+    }
+
+    @Test
+    void testSearch() {
+        // search() is a wrapper around isExists()
+        assertFalse(list.search(10), "Search should return false for empty list");
+
+        list.addAtLast(10);
+        assertTrue(list.search(10), "Search should find the existing element");
+        assertFalse(list.search(99), "Search should return false for non-existent item");
+    }
+
+    @Test
     void testEdgeCases() {
         assertNull(list.removeFromFirst());
         assertNull(list.removeFromLast());

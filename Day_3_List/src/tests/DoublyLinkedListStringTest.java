@@ -104,6 +104,63 @@ class DoublyLinkedListStringTest {
     }
 
     @Test
+    void testDeleteElement() {
+        list.addAtLast("Apple");
+        list.addAtLast("Banana");
+        list.addAtLast("Apple"); // Duplicate to test single deletion behavior
+
+        // Delete the first occurrence of "Apple"
+        assertTrue(list.deleteElement("Apple"), "Should successfully delete an existing element");
+        assertEquals(2, list.size(), "Size should reduce to 2");
+        assertTrue(list.isExists("Apple"), "Second 'Apple' should still exist");
+
+        // Try deleting a non-existent element
+        assertFalse(list.deleteElement("Mango"), "Deleting non-existent element should return false");
+
+        // Delete the remaining items
+        assertTrue(list.deleteElement("Banana"));
+        assertTrue(list.deleteElement("Apple"));
+        assertTrue(list.isEmpty(), "List should be empty now");
+
+        // Deleting from empty list
+        assertFalse(list.deleteElement("Apple"), "Deleting from empty list should return false");
+    }
+
+    @Test
+    void testDeleteAllElement() {
+        list.addAtLast("Apple");
+        list.addAtLast("Banana");
+        list.addAtLast("Apple");
+        list.addAtLast("Apple");
+        list.addAtLast("Cherry");
+
+        // Delete all occurrences of "Apple" (3 instances)
+        assertTrue(list.deleteAllElement("Apple"), "Should successfully delete all matching elements");
+        assertEquals(2, list.size(), "Size should reduce to 2 (Banana and Cherry left)");
+        assertFalse(list.isExists("Apple"), "No 'Apple' elements should remain");
+        assertTrue(list.isExists("Banana"));
+        assertTrue(list.isExists("Cherry"));
+
+        // Try deleting all of something that doesn't exist
+        assertFalse(list.deleteAllElement("Mango"), "Should return false if element is not found");
+
+        // Delete remaining elements to test clearing everything
+        assertTrue(list.deleteAllElement("Banana"));
+        assertTrue(list.deleteAllElement("Cherry"));
+        assertTrue(list.isEmpty(), "List should be completely empty");
+    }
+
+    @Test
+    void testSearch() {
+        // search() is a wrapper around isExists()
+        assertFalse(list.search("Apple"), "Search should return false for empty list");
+
+        list.addAtLast("Apple");
+        assertTrue(list.search("Apple"), "Search should find the existing element");
+        assertFalse(list.search("Banana"), "Search should return false for non-existent item");
+    }
+
+    @Test
     void testEdgeCases() {
         assertNull(list.removeFromFirst());
         assertNull(list.removeFromLast());

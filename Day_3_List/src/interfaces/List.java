@@ -14,4 +14,14 @@ public interface List<T> {
     public boolean isEmpty();
     public int size();
 
+    default boolean deleteElement(T element){
+        return false;
+    }
+    default boolean deleteAllElement(T element){
+        return false;
+    }
+    default boolean search(T data){
+        return isExists(data);
+    }
+
 }

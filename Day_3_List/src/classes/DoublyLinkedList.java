@@ -2,6 +2,8 @@ package classes;
 
 import interfaces.List;
 
+import java.util.Objects;
+
 public class DoublyLinkedList<T> implements List<T> {
 
     public class Node<T>{
@@ -61,21 +63,15 @@ public class DoublyLinkedList<T> implements List<T> {
         // start
         if(position == 0) return addAtFirst(data);
         // end
-        if(position == size - 1) return addAtLast(data);
+        if(position == size) return addAtLast(data);
         // else
         Node<T> currentNode = head;
-        int it = 0;
-        while(currentNode.next != null){
-            if(it == position) break;
-            currentNode = currentNode.next;
-            it++;
-        }
+        for(int i = 0; i < position; i++, currentNode = currentNode.next);
+
         newNode.next = currentNode.next;
         newNode.prev = currentNode.prev;
         currentNode.prev.next = newNode;
-        currentNode.next.prev = newNode;
-        currentNode.next = null;
-        currentNode.prev = null;
+        currentNode.next = newNode;
         size++;
         return true;
     }
@@ -122,18 +118,14 @@ public class DoublyLinkedList<T> implements List<T> {
 
     @Override
     public T removeFromPosition(int position) {
-        if(position < 0 || position > size) return null;
+        if(position < 0 || position >= size) return null;
 
         if(position == 0) return removeFromFirst();
         if(position == size - 1) return removeFromLast();
 
         Node<T> currentNode = head;
-        int it = 0;
-        while(currentNode.next != null){
-            if(it == position) break;
-            currentNode = currentNode.next;
-            it++;
-        }
+        for(int i = 0; i < position; i++, currentNode = currentNode.next);
+
         Node<T> tempNode = currentNode;
         currentNode.prev.next = currentNode.next;
         currentNode.next.prev = currentNode.prev;
@@ -143,14 +135,31 @@ public class DoublyLinkedList<T> implements List<T> {
     }
 
     @Override
+    public boolean deleteElement(T element){
+        // TODO: implementation
+        return false;
+    }
+
+    @Override
+    public boolean deleteAllElement(T element){
+        // TODO: implementation
+        return false;
+    }
+
+    @Override
     public boolean isExists(T data) {
         Node<T> currentNode = head;
         if(currentNode == null) return false;
         while(currentNode != null){
-            if(currentNode.data.equals(data)) return true;
+            if(Objects.equals(currentNode.data,data)) return true;
             currentNode = currentNode.next;
         }
         return false;
+    }
+
+    @Override
+    public boolean search(T data){
+        return isExists(data);
     }
 
     @Override

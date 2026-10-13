@@ -48,21 +48,14 @@ public class CircularSinglyLinkedList<T> implements List<T> {
     @Override
     public boolean addAtPosition(T data, int position) {
         if(position < 0 || position > size) return false;
-        if(position == 0) return addAtFirst(data);
-        if(position == size - 1) return addAtLast(data);
 
         Node<T> newNode = new Node<>(data);
-        Node<T> currentNode = head.next;
-        Node<T> previousNode = null;
-        int it = 0;
-        while(currentNode.next != head){
-            if(it == position) break;
-            previousNode = currentNode;
-            currentNode = currentNode.next;
-            it++;
-        }
+        Node<T> previousNode = head;
+        for (int i = 0; i < position; i++, previousNode = previousNode.next);
+
+        Node<T> target = previousNode.next;
         previousNode.next = newNode;
-        newNode.next = currentNode;
+        newNode.next = target;
         size++;
         return true;
     }
@@ -72,55 +65,47 @@ public class CircularSinglyLinkedList<T> implements List<T> {
         if(head.next == head) return null;
         Node<T> currentNode = head.next;
         head.next = head.next.next;
-        if(head.next == null) head.next = head;
         size--;
         return currentNode.data;
     }
 
     @Override
     public T removeFromLast() {
-        if(head.next == head) return null;
-        Node<T> currentNode = head.next;
-        Node<T> previousNode = null;
-        while(currentNode.next != head){
-            previousNode = currentNode;
+        if (head.next == head) return null;
+
+        Node<T> currentNode = head;
+        while (currentNode.next.next != head) {
             currentNode = currentNode.next;
         }
-        previousNode.next = currentNode.next;
+
+        Node<T> target = currentNode.next;
+        currentNode.next = target.next;
         size--;
-        return currentNode.data;
+        return target.data;
     }
 
     @Override
     public T removeFromPosition(int position) {
-        if(position < 0 || position > size) return null;
-        if(position == 0) return removeFromFirst();
-        if(position == size - 1) return removeFromLast();
+        if (position < 0 || position >= size) return null;
 
-        Node<T> currentNode = head.next;
-        Node<T> previousNode = null;
-        int it = 0;
-        while(currentNode.next != head){
-            if(it == position) break;
-            previousNode = currentNode;
-            currentNode = currentNode.next;
-            it++;
-        }
-        previousNode.next = currentNode.next;
+        Node<T> prev = head;
+        for (int i = 0; i < position; i++, prev = prev.next);
+
+        Node<T> target = prev.next;
+        prev.next = target.next;
         size--;
-        return currentNode.data;
-
+        return target.data;
     }
 
 
     @Override
     public boolean isExists(T data) {
-        if (head == null) return false;
-        Node<T> currentNode = head;
-        do {
-            if (Objects.equals(currentNode.data, data)) return true;
+        if (head.next == head) return false;
+        Node<T> currentNode = head.next;
+        while(currentNode != head){
+            if(Objects.equals(currentNode.data, data)) return true;
             currentNode = currentNode.next;
-        } while (currentNode.next != head);
+        }
         return false;
     }
 

@@ -107,9 +107,62 @@ class SinglyLinkedListStringTest {
         assertNull(list.removeFromFirst());
         assertNull(list.removeFromLast());
         assertNull(list.removeFromPosition(0));
+    }
 
-        // Invalid position checks (if your implementation throws exceptions or returns false/null)
-        // Adjust these assertions based on how your error handling is written:
-        // assertThrows(IndexOutOfBoundsException.class, () -> list.addAtPosition("Item", 10));
+    @Test
+    void testDeleteElement() {
+        list.addAtLast("Apple");
+        list.addAtLast("Banana");
+        list.addAtLast("Apple"); // Duplicate to test single deletion behavior
+
+        // Delete the first occurrence of "Apple"
+        Assertions.assertTrue(list.deleteElement("Apple"), "Should successfully delete an existing element");
+        Assertions.assertEquals(2, list.size(), "Size should reduce to 2");
+        Assertions.assertTrue(list.isExists("Apple"), "Second 'Apple' should still exist");
+
+        // Try deleting a non-existent element
+        Assertions.assertFalse(list.deleteElement("Mango"), "Deleting non-existent element should return false");
+
+        // Delete the remaining items
+        Assertions.assertTrue(list.deleteElement("Banana"));
+        Assertions.assertTrue(list.deleteElement("Apple"));
+        Assertions.assertTrue(list.isEmpty(), "List should be empty now");
+
+        // Deleting from empty list
+        Assertions.assertFalse(list.deleteElement("Apple"), "Deleting from empty list should return false");
+    }
+
+    @Test
+    void testDeleteAllElement() {
+        list.addAtLast("Apple");
+        list.addAtLast("Banana");
+        list.addAtLast("Apple");
+        list.addAtLast("Apple");
+        list.addAtLast("Cherry");
+
+        // Delete all occurrences of "Apple" (3 instances)
+        Assertions.assertTrue(list.deleteAllElement("Apple"), "Should successfully delete all matching elements");
+        Assertions.assertEquals(2, list.size(), "Size should reduce to 2 (Banana and Cherry left)");
+        Assertions.assertFalse(list.isExists("Apple"), "No 'Apple' elements should remain");
+        Assertions.assertTrue(list.isExists("Banana"));
+        Assertions.assertTrue(list.isExists("Cherry"));
+
+        // Try deleting all of something that doesn't exist
+        Assertions.assertFalse(list.deleteAllElement("Mango"), "Should return false if element is not found");
+
+        // Delete remaining elements to test clearing everything
+        Assertions.assertTrue(list.deleteAllElement("Banana"));
+        Assertions.assertTrue(list.deleteAllElement("Cherry"));
+        Assertions.assertTrue(list.isEmpty(), "List should be completely empty");
+    }
+
+    @Test
+    void testSearch() {
+        // search() is a wrapper around isExists()
+        Assertions.assertFalse(list.search("Apple"), "Search should return false for empty list");
+
+        list.addAtLast("Apple");
+        Assertions.assertTrue(list.search("Apple"), "Search should find the existing element");
+        Assertions.assertFalse(list.search("Banana"), "Search should return false for non-existent item");
     }
 }

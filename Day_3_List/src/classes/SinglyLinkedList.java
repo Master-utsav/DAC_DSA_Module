@@ -2,6 +2,8 @@ package classes;
 
 import interfaces.List;
 
+import java.util.Objects;
+
 public class SinglyLinkedList<T> implements List<T> {
 
     public class Node<T> {
@@ -41,10 +43,11 @@ public class SinglyLinkedList<T> implements List<T> {
             size++;
             return true;
         }
+        // traverse to last
         Node<T> currentNode = head;
-        while(currentNode.next != null){
+        while(currentNode.next != null)
             currentNode = currentNode.next;
-        }
+
         currentNode.next = newNode;
         size++;
         return true;
@@ -52,29 +55,24 @@ public class SinglyLinkedList<T> implements List<T> {
 
     @Override
     public boolean addAtPosition(T data, int position) {
-        if(position < 0 || position >= size) return false;
+        if(position < 0 || position > size) return false;
         Node<T> newNode = new Node<>(data);
+        // first insert
         if(position == 0) {
             addAtFirst(data);
             return true;
         }
-        else if(position == size - 1){
+        // insert at last
+        else if(position == size){
             addAtLast(data);
             return true;
         }
         // traverse
         Node<T> currentNode = head;
-        Node<T> previousNode = null;
-        int it = 0;
-        while(currentNode != null){
-            if(it == position) break;
-            previousNode = currentNode;
-            currentNode = currentNode.next;
-            it++;
-        }
-        if(currentNode == null) return false;
-        newNode.next = currentNode;
-        previousNode.next = newNode;
+        for(int i = 0; i < position - 1; i++, currentNode = currentNode.next);
+
+        newNode.next = currentNode.next;
+        currentNode.next = newNode;
         size++;
         return true;
     }
@@ -108,9 +106,9 @@ public class SinglyLinkedList<T> implements List<T> {
             return currentNode.data;
         }
         // else
-        while(currentNode.next.next != null){
+        while(currentNode.next.next != null)
             currentNode = currentNode.next;
-        }
+
         Node<T> tempNode = currentNode.next;
         currentNode.next = null;
         size--;
@@ -124,32 +122,42 @@ public class SinglyLinkedList<T> implements List<T> {
         if(position == size - 1) return removeFromLast();
 
         Node<T> currentNode = head;
-        Node<T> previousNode = null;
-        int it = 0;
-        while(currentNode.next != null){
-            if(it == position)break;
-            previousNode = currentNode;
-            currentNode = currentNode.next;
-            it++;
-        }
+        for (int i = 0; i < position - 1; i++, currentNode = currentNode.next);
 
-        previousNode.next = currentNode.next;
+        Node<T> tempNode = currentNode.next;
+        currentNode.next = tempNode.next;
         size--;
-        return currentNode.data;
+        return tempNode.data;
+    }
+
+    @Override
+    public boolean deleteElement(T element){
+        // TODO: implementation
+        return false;
+    }
+
+    @Override
+    public boolean deleteAllElement(T element){
+        // TODO: implementation
+        return false;
     }
 
     @Override
     public boolean isExists(T data) {
         Node<T> currentNode = head;
         if(currentNode == null) return false;
+
         while(currentNode != null){
-            if(currentNode.data.equals(data)) return true;
+            if(Objects.equals(currentNode.data, data)) return true;
             currentNode = currentNode.next;
         }
         return false;
     }
 
-
+    @Override
+    public boolean search(T data){
+        return isExists(data);
+    }
 
     @Override
     public boolean isEmpty() {

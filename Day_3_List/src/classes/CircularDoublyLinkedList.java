@@ -29,6 +29,7 @@ public class CircularDoublyLinkedList<T> implements List<T> {
     @Override
     public boolean addAtFirst(T data) {
         Node<T> newNode = new Node<>(data);
+        newNode.next = head.next;
         head.next.prev = newNode;
         newNode.prev = head;
         head.next = newNode;
@@ -38,37 +39,83 @@ public class CircularDoublyLinkedList<T> implements List<T> {
 
     @Override
     public boolean addAtLast(T data) {
-        return false;
+        Node<T> newNode = new Node<>(data);
+        newNode.prev = head.prev;
+        head.prev.next = newNode;
+        newNode.next = head;
+        head.prev = newNode;
+        size++;
+        return true;
     }
 
     @Override
     public boolean addAtPosition(T data, int position) {
-        return false;
+        if (position < 0 || position > size) return false;
+        if (position == 0) return addAtFirst(data);
+        if (position == size) return addAtLast(data);
+
+        Node<T> newNode = new Node<>(data);
+        Node<T> currentNode = head.next;
+        for(int i = 0; i < position; i++, currentNode = currentNode.next);
+
+        newNode.next = currentNode;
+        newNode.prev = currentNode.prev;
+        currentNode.prev.next = newNode;
+        currentNode.prev = newNode;
+        size++;
+        return true;
     }
 
     @Override
     public T removeFromFirst() {
-        return null;
+        // empty
+        if (head.next == head) return null;
+        Node<T> target = head.next;
+
+        // Bypassoing the target node
+        head.next = target.next;
+        target.next.prev = head;
+        size--;
+        return target.data;
     }
 
     @Override
     public T removeFromLast() {
-        return null;
+        // empty
+        if (head.next == head) return null;
+        Node<T> target = head.prev;
+
+        // Bypassing the target node
+        head.prev = target.prev;
+        target.prev.next = head;
+
+        size--;
+        return target.data;
     }
 
     @Override
     public T removeFromPosition(int position) {
-        return null;
+        if (position < 0 || position >= size) return null;
+        if (position == 0) return removeFromFirst();
+        if (position == size - 1) return removeFromLast();
+
+        Node<T> currentNode = head.next;
+        for(int i = 0; i < position; i++, currentNode = currentNode.next);
+
+        currentNode.prev.next = currentNode.next;
+        currentNode.next.prev = currentNode.prev;
+        size--;
+        return currentNode.data;
     }
 
     @Override
     public boolean isExists(T data) {
-        if (head == null) return false;
-        Node<T> currentNode = head;
-        do {
-            if (Objects.equals(currentNode.data, data)) return true;
+        if (head.next == head) return false;
+        Node<T> currentNode = head.next;
+        while(currentNode != head){
+            if(Objects.equals(currentNode.data, data)) return true;
             currentNode = currentNode.next;
-        } while (currentNode != head);
+        }
         return false;
     }
 
@@ -84,12 +131,12 @@ public class CircularDoublyLinkedList<T> implements List<T> {
 
     public String forwardTraversal(){
         StringBuilder strB = new StringBuilder("[");
-        Node<T> currentNode = head;
-        if(currentNode == null) {
+        Node<T> currentNode = head.next;
+        if(currentNode == head) {
             strB.append("]");
             return strB.toString();
         }
-        while(currentNode != null){
+        while(currentNode != head){
             strB.append(currentNode.data).append(", ");
             currentNode = currentNode.next;
         }
@@ -99,12 +146,12 @@ public class CircularDoublyLinkedList<T> implements List<T> {
 
     public String backwardTraversal(){
         StringBuilder strB = new StringBuilder("[");
-        Node<T> currentNode = head;
-        if(currentNode == null) {
+        Node<T> currentNode = head.prev;
+        if(currentNode == head) {
             strB.append("]");
             return strB.toString();
         }
-        while(currentNode != null){
+        while(currentNode != head){
             strB.append(currentNode.data).append(", ");
             currentNode = currentNode.prev;
         }
