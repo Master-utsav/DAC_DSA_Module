@@ -198,11 +198,12 @@ public class SinglyLinkedList<T> implements List<T> {
         if(size <= 1) return this;
         Node<T> currentNode = head;
         Node<T> previousNode = null;
+        Node<T> nextNode;
         while(currentNode != null){
-            Node<T> nextNode = currentNode;
+            nextNode = currentNode.next;
             currentNode.next = previousNode;
             previousNode = currentNode;
-            currentNode = nextNode.next;
+            currentNode = nextNode;
         }
         head = previousNode;
         return this;

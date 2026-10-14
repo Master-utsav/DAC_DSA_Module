@@ -150,4 +150,39 @@ public class CircularSinglyLinkedList<T> implements List<T> {
     public int size() {
         return size;
     }
+
+
+
+    @Override
+    public CircularSinglyLinkedList<T> reverseList(){
+        if(head.next == head || size == 1) return this;
+
+        Node<T> currentNode = head.next;
+        Node<T> previousNode = head;
+        Node<T> nextNode;
+        while(currentNode != head){
+            nextNode = currentNode.next;
+            currentNode.next = previousNode;
+            previousNode = currentNode;
+            currentNode = nextNode;
+        }
+        head.next = previousNode;
+        return this;
+
+    }
+
+    public String forwardTraversal(){
+        StringBuilder strB = new StringBuilder("[");
+        Node<T> currentNode = head.next;
+        if(currentNode == head) {
+            strB.append("]");
+            return strB.toString();
+        }
+        while(currentNode != head){
+            strB.append(currentNode.data).append(", ");
+            currentNode = currentNode.next;
+        }
+        strB.append("]");
+        return strB.toString();
+    }
 }

@@ -112,4 +112,30 @@ class  CircularSinglyLinkedListIntegerTest{
         assertFalse(list.addAtPosition(50, -1));
         assertFalse(list.addAtPosition(50, 5));
     }
+
+    @Test
+    public void testReverseListInt() {
+        // 1. Test Empty List
+        CircularSinglyLinkedList<Integer> lstEmpty = new CircularSinglyLinkedList<>();
+        lstEmpty.reverseList();
+        // Assuming an empty list returns "[]" or similar based on your implementation
+        // Adjust expected string if your forwardTraversal handles empty lists differently
+        assertEquals("[]", lstEmpty.forwardTraversal(), "Empty integer list failed");
+
+        // 2. Test Single Node List
+        CircularSinglyLinkedList<Integer> lstSingle = new CircularSinglyLinkedList<>();
+        lstSingle.addAtLast(10);
+        lstSingle.reverseList();
+        assertEquals("[10, ]", lstSingle.forwardTraversal(), "Single node integer list failed");
+
+        // 3. Test Multiple Nodes List
+        CircularSinglyLinkedList<Integer> lstMulti = new CircularSinglyLinkedList<>();
+        lstMulti.addAtLast(10);
+        lstMulti.addAtLast(20);
+        lstMulti.addAtLast(30);
+        // Original: [10, 20, 30, ] -> reverseListd: [30, 20, 10, ]
+        lstMulti.reverseList();
+        assertEquals("[30, 20, 10, ]", lstMulti.forwardTraversal(), "Multiple nodes integer list failed");
+    }
+
 }

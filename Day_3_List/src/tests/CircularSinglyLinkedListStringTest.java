@@ -112,4 +112,28 @@ class CircularSinglyLinkedListStringTest {
         // Adjust these assertions based on how your error handling is written:
         // assertThrows(IndexOutOfBoundsException.class, () -> list.addAtPosition("Item", 10));
     }
+
+
+    @Test
+    public void testReverseListString() {
+        // 1. Test Empty List
+        CircularSinglyLinkedList<String> lstEmpty = new CircularSinglyLinkedList<>();
+        lstEmpty.reverseList();
+        assertEquals("[]", lstEmpty.forwardTraversal(), "Empty string list failed");
+
+        // 2. Test Single Node List
+        CircularSinglyLinkedList<String> lstSingle = new CircularSinglyLinkedList<>();
+        lstSingle.addAtLast("apple");
+        lstSingle.reverseList();
+        assertEquals("[apple, ]", lstSingle.forwardTraversal(), "Single node string list failed");
+
+        // 3. Test Multiple Nodes List
+        CircularSinglyLinkedList<String> lstMulti = new CircularSinglyLinkedList<>();
+        lstMulti.addAtLast("apple");
+        lstMulti.addAtLast("banana");
+        lstMulti.addAtLast("cherry");
+        // Original: [apple, banana, cherry, ] -> reverseListd: [cherry, banana, apple, ]
+        lstMulti.reverseList();
+        assertEquals("[cherry, banana, apple, ]", lstMulti.forwardTraversal(), "Multiple nodes string list failed");
+    }
 }

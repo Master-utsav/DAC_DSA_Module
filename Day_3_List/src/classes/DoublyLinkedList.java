@@ -225,4 +225,5 @@ public class DoublyLinkedList<T> implements List<T> {
         return strB.toString();
     }
 
+
 }
