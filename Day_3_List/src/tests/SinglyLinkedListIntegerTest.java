@@ -6,6 +6,7 @@ import classes.SinglyLinkedList;
 import interfaces.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class SinglyLinkedListIntegerTest {
@@ -169,4 +170,20 @@ class SinglyLinkedListIntegerTest {
         assertFalse(list.addAtPosition(50, -1));
         assertFalse(list.addAtPosition(50, 5));
     }
+
+    @Test
+    @DisplayName("Test Reversing Integer Singly Linked List")
+    void testReverseIntegerList() {
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+        list.addAtLast(1);
+        list.addAtLast(2);
+        list.addAtLast(3);
+        // Initial: 1 -> 2 -> 3
+
+        list.reverseList();
+
+        // Expected after reversal: 3 -> 2 -> 1
+        assertEquals("[3, 2, 1, ]", list.forwardTraversal());
+    }
+
 }

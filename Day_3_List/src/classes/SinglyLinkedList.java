@@ -132,14 +132,37 @@ public class SinglyLinkedList<T> implements List<T> {
 
     @Override
     public boolean deleteElement(T element){
-        // TODO: implementation
+        if(!isExists(element)) return false;
+        // use the position delete method
+        Node<T> currentNode = head;
+        int it = 0;
+        while(currentNode != null){
+            if(currentNode.data == element) {
+                removeFromPosition(it);
+                return true;
+            }
+            else{
+                it++;
+                currentNode = currentNode.next;
+            }
+        }
         return false;
     }
 
     @Override
     public boolean deleteAllElement(T element){
-        // TODO: implementation
-        return false;
+        if(!isExists(element)) return false;
+        Node<T> currentNode = head;
+        while(currentNode != null){
+            if(currentNode.data == element){
+                boolean status = deleteElement(element);
+                if(status == false) return true;
+            }
+            else {
+                currentNode = currentNode.next;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -167,6 +190,37 @@ public class SinglyLinkedList<T> implements List<T> {
     @Override
     public int size() {
         return size;
+    }
+
+    // implement reverseList
+    @Override
+    public SinglyLinkedList<T> reverseList(){
+        if(size <= 1) return this;
+        Node<T> currentNode = head;
+        Node<T> previousNode = null;
+        while(currentNode != null){
+            Node<T> nextNode = currentNode;
+            currentNode.next = previousNode;
+            previousNode = currentNode;
+            currentNode = nextNode.next;
+        }
+        head = previousNode;
+        return this;
+    }
+
+    public String forwardTraversal(){
+        StringBuilder strB = new StringBuilder("[");
+        Node<T> currentNode = head;
+        if(currentNode == null) {
+            strB.append("]");
+            return strB.toString();
+        }
+        while(currentNode != null){
+            strB.append(currentNode.data).append(", ");
+            currentNode = currentNode.next;
+        }
+        strB.append("]");
+        return strB.toString();
     }
 
 }

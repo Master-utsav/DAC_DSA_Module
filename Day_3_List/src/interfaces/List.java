@@ -23,5 +23,8 @@ public interface List<T> {
     default boolean search(T data){
         return isExists(data);
     }
+    default List<T> reverseList(){
+        return this;
+    }
 
 }

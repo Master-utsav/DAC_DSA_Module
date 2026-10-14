@@ -6,6 +6,7 @@ import classes.SinglyLinkedList;
 import interfaces.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class SinglyLinkedListStringTest {
@@ -164,5 +165,20 @@ class SinglyLinkedListStringTest {
         list.addAtLast("Apple");
         Assertions.assertTrue(list.search("Apple"), "Search should find the existing element");
         Assertions.assertFalse(list.search("Banana"), "Search should return false for non-existent item");
+    }
+
+    @Test
+    @DisplayName("Test Reversing String Singly Linked List")
+    void testReverseStringList() {
+        SinglyLinkedList<String> list = new SinglyLinkedList<>();
+        list.addAtLast("A");
+        list.addAtLast("B");
+        list.addAtLast("C");
+        // Initial: "A" -> "B" -> "C"
+
+        list.reverseList();
+
+        // Expected after reversal: "C" -> "B" -> "A"
+        assertEquals("[C, B, A, ]", list.forwardTraversal());
     }
 }

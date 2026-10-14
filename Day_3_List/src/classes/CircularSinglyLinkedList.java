@@ -97,6 +97,38 @@ public class CircularSinglyLinkedList<T> implements List<T> {
         return target.data;
     }
 
+    @Override
+    public boolean deleteElement(T element){
+        if(!isExists(element)) return false;
+        Node<T> currentNode = head;
+        while(currentNode.next != head){
+            if(currentNode.next.data == element){
+                currentNode.next = currentNode.next.next;
+                size--;
+                return true;
+            }
+            else{
+                currentNode = currentNode.next;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteAllElement(T element){
+        if(!isExists(element)) return false;
+        Node<T> currentNode = head;
+        while(currentNode.next != head){
+            if(currentNode.data == element){
+                currentNode.next = currentNode.next.next;
+                size--;
+            }
+            else{
+                currentNode = currentNode.next;
+            }
+        }
+        return true;
+    }
 
     @Override
     public boolean isExists(T data) {

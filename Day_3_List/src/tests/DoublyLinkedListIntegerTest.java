@@ -135,7 +135,9 @@ class DoublyLinkedListIntegerTest {
         list.addAtLast(30);
 
         // Delete all occurrences of 10 (3 instances)
+        assertEquals("[10, 20, 10, 10, 30, ]", list.forwardTraversal());
         assertTrue(list.deleteAllElement(10), "Should successfully delete all matching elements");
+        assertEquals("[20, 30, ]", list.forwardTraversal());
         assertEquals(2, list.size(), "Size should reduce to 2 (20 and 30 left)");
         assertFalse(list.isExists(10), "No '10' elements should remain");
         assertTrue(list.isExists(20));

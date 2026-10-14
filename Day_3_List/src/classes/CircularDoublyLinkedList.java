@@ -109,6 +109,41 @@ public class CircularDoublyLinkedList<T> implements List<T> {
     }
 
     @Override
+    public boolean deleteElement(T element){
+        if(!isExists(element)) return false;
+        Node<T> currentNode = head.next;
+        while(currentNode != head){
+            if(currentNode.data == element){
+                currentNode.prev.next = currentNode.next;
+                currentNode.next.prev = currentNode.prev;
+                size--;
+                return true;
+            }
+            else{
+                currentNode = currentNode.next;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteAllElement(T element){
+        if(!isExists(element)) return false;
+        Node<T> currentNode = head.next;
+        while(currentNode != head){
+            if(currentNode.data == element){
+                currentNode.prev.next = currentNode.next;
+                currentNode.next.prev = currentNode.prev;
+                size--;
+            }
+            else{
+                currentNode = currentNode.next;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public boolean isExists(T data) {
         if (head.next == head) return false;
         Node<T> currentNode = head.next;
