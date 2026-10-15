@@ -2,10 +2,12 @@ package classes;
 
 import interfaces.BinaryTreeInterface;
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 
 public class BinaryTree<T> implements BinaryTreeInterface<T> {
-
 
     private TreeNode<T> root = null;
 
@@ -29,25 +31,14 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
     }
 
     private void inorder(StringBuilder str, TreeNode<T> rootNode){
-
-        if(rootNode == null) {
-            return;
-        };
-
+        if(rootNode == null) return;
         // left
-        if(rootNode.left != null){
-            inorder(str, rootNode.left);
-        }
+        if(rootNode.left != null) inorder(str, rootNode.left);
         // process
         str.append(rootNode.data).append(", ");
-
         // right
-        if(rootNode.right != null){
-            inorder(str, rootNode.right);
-        }
-
+        if(rootNode.right != null) inorder(str, rootNode.right);
     }
-
 
     @Override
     public String preOrderTraversal() {
@@ -64,23 +55,13 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
     }
 
     private void preOrder(StringBuilder str, TreeNode<T> rootNode){
-
-        if(rootNode == null) {
-            return;
-        };
-
+        if(rootNode == null) return;
         // process
         str.append(rootNode.data).append(", ");
-
         // left
-        if(rootNode.left != null){
-            inorder(str, rootNode.left);
-        }
-
+        if(rootNode.left != null) preOrder(str, rootNode.left);
         // right
-        if(rootNode.right != null){
-            inorder(str, rootNode.right);
-        }
+        if(rootNode.right != null) preOrder(str, rootNode.right);
     }
 
     @Override
@@ -96,109 +77,127 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
         strB.append("]");
         return strB.toString();
     }
-
     private void postOrder(StringBuilder str, TreeNode<T> rootNode){
-
-        if(rootNode == null) {
-            return;
-        };
-
-
+        if(rootNode == null) return;
         // left
-        if(rootNode.left != null){
-            inorder(str, rootNode.left);
-        }
+        if(rootNode.left != null) postOrder(str, rootNode.left);
         // right
-        if(rootNode.right != null){
-            inorder(str, rootNode.right);
-        }
+        if(rootNode.right != null) postOrder(str, rootNode.right);
         // process
         str.append(rootNode.data).append(", ");
-
-
     }
 
 
     @Override
-    public int countNode() {
-        int count = 0;
+    public String levelOrderTraversal() {
+        StringBuilder strB = new StringBuilder("[");
         TreeNode<T> rootNode = root;
-        if(rootNode == null) return count;
-        inorder(count, rootNode);
-        return count;
+        if(rootNode == null){
+            strB.append("]");
+            return strB.toString();
+        }
+        // algo
+        Queue<TreeNode<T>> tempQueue = new LinkedList<>();
+        tempQueue.add(rootNode);
+
+        while(!tempQueue.isEmpty()){
+            TreeNode<T> temp = tempQueue.poll();
+            strB.append(temp.data).append(", ");
+            if(temp.left != null) tempQueue.add(temp.left);
+            if(temp.right != null) tempQueue.add(temp.right);
+        }
+
+        strB.append("]");
+        return strB.toString();
+    }
+//    Overall timeComplexity O(N2)
+//    @Override
+//    public String levelOrderTraversalPerLevel() {
+//        StringBuilder strB = new StringBuilder();
+//        TreeNode<T> rootNode = root;
+//        if(rootNode == null){
+//            strB.append("[]");
+//            return strB.toString();
+//        }
+//        // algo
+//        Queue<TreeNode<T>> tempQueue = new LinkedList<>();
+//        tempQueue.add(rootNode);
+//        tempQueue.add(null);
+//
+//        while(!tempQueue.isEmpty()){
+//            TreeNode<T> temp = tempQueue.poll();
+//            if(temp == null) strB.append("\n");
+//            else strB.append(temp.data).append(", ");
+//            if(temp != null && temp.left != null) tempQueue.add(temp.left);
+//            if(temp != null && temp.right != null) tempQueue.add(temp.right);
+//            if(!tempQueue.contains(null) && !tempQueue.isEmpty()) tempQueue.add(null); // O(N)
+//        }
+//        return strB.toString();
+//    }
+
+    @Override
+    public String levelOrderTraversalPerLevel() {
+        StringBuilder strB = new StringBuilder();
+        TreeNode<T> rootNode = root;
+        if(rootNode == null){
+            strB.append("[]");
+            return strB.toString();
+        }
+        // algo
+        Queue<TreeNode<T>> tempQueue = new LinkedList<>();
+        tempQueue.add(rootNode);
+        while(!tempQueue.isEmpty()){
+            int size = tempQueue.size();
+            for(int i = 0; i < size; i++){
+                TreeNode<T> temp = tempQueue.poll();
+                if(temp != null){
+                    strB.append(temp.data).append(", ");
+                }
+                if(temp != null && temp.left != null) tempQueue.add(temp.left);
+                if(temp != null && temp.right != null) tempQueue.add(temp.right);
+            }
+            strB.append("\n");
+        }
+        return strB.toString();
     }
 
-    private void inorder(int count, TreeNode<T> rootNode){
 
-        if(rootNode == null) return;
 
-        // left
-        if(rootNode.left != null){
-            inorder(count, rootNode.left);
-        }
-        // process
-        count++;
 
-        // right
-        if(rootNode.right != null){
-            inorder(count, rootNode.right);
-        }
+    @Override
+    public int countNode() {
+        TreeNode<T> rootNode = root;
+        if(root == null) return 0;
+        return  1 + countNodes(rootNode);
+    }
 
+    private int countNodes(TreeNode<T> rootNode){
+        if(rootNode == null) return 0;
+        return 1 + countLeaf(rootNode.left) + countLeaf(rootNode.right);
     }
 
     @Override
     public int countLeafNodes() {
         TreeNode<T> rootNode = root;
-        int countLeafs = 0;
-        if(rootNode == null) return countLeafs;
-        inorder(countLeafs, rootNode);
-        return countLeafs;
+        return countLeaf(rootNode);
     }
 
-    private void inorderLeafCount(int countLeafs, TreeNode<T> rootNode){
-
-        if(rootNode == null) return;
-
-        // left
-        if(rootNode.left != null){
-            inorder(countLeafs, rootNode.left);
-        }
-        if(rootNode.left == null && rootNode.right == null){
-            countLeafs++;
-        }
-
-        // right
-        if(rootNode.right != null){
-            inorder(countLeafs, rootNode.right);
-        }
-
+    private int countLeaf(TreeNode<T> rootNode){
+        if(rootNode == null) return 0;
+        if(rootNode.left == null && rootNode.right == null) return 1;
+        return countLeaf(rootNode.left) + countLeaf(rootNode.right);
     }
 
     @Override
     public int countNodesWithValues(T value) {
         TreeNode<T> rootNode = root;
-        int count = 0;
-        if(rootNode == null) return count;
-        inorder(count, rootNode);
-        return count;
+        if(rootNode == null) return 0;
+        return countContainValue(rootNode , value);
     }
 
-    private void inorderCountContainValue(int count, TreeNode<T> rootNode , T value){
-
-        if(rootNode == null) return;
-
-        // left
-        if(rootNode.left != null){
-            inorder(count, rootNode.left);
-        }
-        if(Objects.equals(rootNode.data, value)){
-            count++;
-        }
-
-        // right
-        if(rootNode.right != null){
-            inorder(count, rootNode.right);
-        }
-
+    private int countContainValue(TreeNode<T> rootNode , T value){
+        if(rootNode == null) return 0;
+        if(Objects.equals(rootNode.data, value)) return 1;
+        return countContainValue(rootNode.left, value) + countContainValue(rootNode.right, value);
     }
 }
