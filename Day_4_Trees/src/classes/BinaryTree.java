@@ -16,20 +16,19 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
         root = rootNode;
     }
 
+
     @Override
     public String inOrderTraversal() {
+        if(root == null) return "[]";
+
         TreeNode<T> rootNode = root;
-        StringBuilder strB = new StringBuilder();
-        strB.append("[");
-        if(rootNode == null){
-            strB.append("]");
-            return strB.toString();
-        }
+        StringBuilder strB = new StringBuilder("[");
+
         inorder(strB, rootNode);
+
         strB.append("]");
         return strB.toString();
     }
-
     private void inorder(StringBuilder str, TreeNode<T> rootNode){
         if(rootNode == null) return;
         // left
@@ -42,18 +41,16 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
 
     @Override
     public String preOrderTraversal() {
+        if(root == null) return "[]";
+
         TreeNode<T> rootNode = root;
-        StringBuilder strB = new StringBuilder();
-        strB.append("[");
-        if(rootNode == null){
-            strB.append("]");
-            return strB.toString();
-        }
+        StringBuilder strB = new StringBuilder("[");
+
         preOrder(strB, rootNode);
+
         strB.append("]");
         return strB.toString();
     }
-
     private void preOrder(StringBuilder str, TreeNode<T> rootNode){
         if(rootNode == null) return;
         // process
@@ -66,14 +63,13 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
 
     @Override
     public String postOrderTraversal() {
+        if(root == null) return "[]";
+
         TreeNode<T> rootNode = root;
-        StringBuilder strB = new StringBuilder();
-        strB.append("[");
-        if(rootNode == null){
-            strB.append("]");
-            return strB.toString();
-        }
+        StringBuilder strB = new StringBuilder("[");
+
         postOrder(strB, rootNode);
+
         strB.append("]");
         return strB.toString();
     }
@@ -87,16 +83,13 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
         str.append(rootNode.data).append(", ");
     }
 
-
     @Override
     public String levelOrderTraversal() {
+        if(root == null) return "[]";
+
         StringBuilder strB = new StringBuilder("[");
         TreeNode<T> rootNode = root;
-        if(rootNode == null){
-            strB.append("]");
-            return strB.toString();
-        }
-        // algo
+
         Queue<TreeNode<T>> tempQueue = new LinkedList<>();
         tempQueue.add(rootNode);
 
@@ -108,8 +101,10 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
         }
 
         strB.append("]");
+
         return strB.toString();
     }
+
 
 //    Overall timeComplexity O(N2)
 //    @Override
@@ -138,17 +133,18 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
 
     @Override
     public String levelOrderTraversalPerLevel() {
+        if(root == null) return "[]";
+
         StringBuilder strB = new StringBuilder();
         TreeNode<T> rootNode = root;
-        if(rootNode == null){
-            strB.append("[]");
-            return strB.toString();
-        }
+
         // algo
         Queue<TreeNode<T>> tempQueue = new LinkedList<>();
         tempQueue.add(rootNode);
+
         while(!tempQueue.isEmpty()){
             int size = tempQueue.size();
+
             for(int i = 0; i < size; i++){
                 TreeNode<T> temp = tempQueue.poll();
                 if(temp != null){
@@ -157,10 +153,13 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
                 if(temp != null && temp.left != null) tempQueue.add(temp.left);
                 if(temp != null && temp.right != null) tempQueue.add(temp.right);
             }
+
             strB.append("\n");
         }
+
         return strB.toString();
     }
+
 
     @Override
     public int countNode() {
@@ -173,25 +172,21 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
 
     @Override
     public int countLeafNodes() {
-        TreeNode<T> rootNode = root;
-        return countLeaf(rootNode);
+        return countLeaf(root);
     }
-
     private int countLeaf(TreeNode<T> rootNode){
         if(rootNode == null) return 0;
-        if(rootNode.left == null && rootNode.right == null) return 1;
-        return countLeaf(rootNode.left) + countLeaf(rootNode.right);
+        int ifLeafThenAdd = (rootNode.left == null && rootNode.right == null) ? 1 : 0;
+        return ifLeafThenAdd + countLeaf(rootNode.left) + countLeaf(rootNode.right);
     }
 
     @Override
     public int countNodesWithValues(T value) {
-        TreeNode<T> rootNode = root;
-        if(rootNode == null) return 0;
-        return countContainValue(rootNode , value);
+        return countContainValue(root , value);
     }
     private int countContainValue(TreeNode<T> rootNode , T value){
         if(rootNode == null) return 0;
-        if(Objects.equals(rootNode.data, value)) return 1;
-        return countContainValue(rootNode.left, value) + countContainValue(rootNode.right, value);
+        int ifMatchThenAdd = Objects.equals(rootNode.data, value)  ? 1 : 0;
+        return ifMatchThenAdd + countContainValue(rootNode.left, value) + countContainValue(rootNode.right, value);
     }
 }

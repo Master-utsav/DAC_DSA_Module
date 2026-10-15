@@ -6,6 +6,11 @@ import java.util.*;
 
 public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
     private TreeNode<T> root = null;
+    private final Comparator<T> comparator;
+
+    public BinarySearchTree(Comparator<T> comparator){
+        this.comparator = comparator;
+    }
 
     @Override
     public void setRoot(TreeNode<T> rootNode){
@@ -13,7 +18,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
     }
 
     @Override
-    public void insert(T data, Comparator<T> comparator) {
+    public void insert(T data) {
         TreeNode<T> rootNode = root;
         TreeNode<T> newNode = new TreeNode<>(data);
 
@@ -161,7 +166,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
     }
 
     @Override
-    public boolean contains(T data, Comparator<T> comparator) {
+    public boolean contains(T data) {
         if(root == null) return false;
         TreeNode<T> rootNode = root;
 
@@ -210,7 +215,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
     }
 
     @Override
-    public T inOrderPredecessor(T value, Comparator<T> comparator) {
+    public T inOrderPredecessor(T value) {
         if(root == null) return null;
 
         TreeNode<T> rootNode = root;
@@ -233,7 +238,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
     }
 
     @Override
-    public T inOrderSuccessor(T value, Comparator<T> comparator) {
+    public T inOrderSuccessor(T value) {
         if(root == null) return null;
 
         TreeNode<T> rootNode = root;
@@ -256,7 +261,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
     }
 
     @Override
-    public boolean remove(T data, Comparator<T> comparator) {
+    public boolean remove(T data) {
         if(root == null) return false;
 
         TreeNode<T> rootNode = root;
@@ -273,7 +278,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
         // if not found element
         if(rootNode == null) return false;
 
-        // now rootnode is the element which i have to delete
+        // now rootnode is the element which I have to delete
         // if no left and no right children
         if(rootNode.left == null && rootNode.right == null){
             if (rootNode == root) { root = null; return true; } // Deleting root node

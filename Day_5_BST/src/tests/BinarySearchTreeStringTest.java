@@ -10,37 +10,35 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BinarySearchTreeStringTest {
 
     private BinarySearchTreeInterface<String> bst;
-    private Comparator<String> comparator;
 
     @BeforeEach
     public void setUp() {
-        bst = new BinarySearchTree<>();
-        comparator = String::compareTo;
+        bst = new BinarySearchTree<>(String::compareTo);
     }
 
     @Test
     public void testInsertAndContains() {
-        assertFalse(bst.contains("M", comparator));
+        assertFalse(bst.contains("M"));
 
-        bst.insert("M", comparator);
-        bst.insert("G", comparator);
-        bst.insert("T", comparator);
+        bst.insert("M");
+        bst.insert("G");
+        bst.insert("T");
 
-        assertTrue(bst.contains("M", comparator));
-        assertTrue(bst.contains("G", comparator));
-        assertTrue(bst.contains("T", comparator));
-        assertFalse(bst.contains("Z", comparator));
+        assertTrue(bst.contains("M"));
+        assertTrue(bst.contains("G"));
+        assertTrue(bst.contains("T"));
+        assertFalse(bst.contains("Z"));
     }
 
     @Test
     public void testMinMaxAndHeight() {
         // Alphabetical BST: M, G, T, B, I, W
-        bst.insert("M", comparator);
-        bst.insert("G", comparator);
-        bst.insert("T", comparator);
-        bst.insert("B", comparator);
-        bst.insert("I", comparator);
-        bst.insert("W", comparator);
+        bst.insert("M");
+        bst.insert("G");
+        bst.insert("T");
+        bst.insert("B");
+        bst.insert("I");
+        bst.insert("W");
 
         assertEquals("B", bst.minElement());
         assertEquals("W", bst.maxElement());
@@ -55,12 +53,12 @@ public class BinarySearchTreeStringTest {
         //      G   T
         //     / \   \
         //    B   I   W
-        bst.insert("M", comparator);
-        bst.insert("G", comparator);
-        bst.insert("T", comparator);
-        bst.insert("B", comparator);
-        bst.insert("I", comparator);
-        bst.insert("W", comparator);
+        bst.insert("M");
+        bst.insert("G");
+        bst.insert("T");
+        bst.insert("B");
+        bst.insert("I");
+        bst.insert("W");
 
         assertEquals("[B, G, I, M, T, W, ]", bst.inOrderTraversal());
         assertEquals("[M, G, B, I, T, W, ]", bst.preOrderTraversal());
@@ -77,46 +75,46 @@ public class BinarySearchTreeStringTest {
         //      G   T
         //     / \   \
         //    B   I   W
-        bst.insert("M", comparator);
-        bst.insert("G", comparator);
-        bst.insert("T", comparator);
-        bst.insert("B", comparator);
-        bst.insert("I", comparator);
-        bst.insert("W", comparator);
+        bst.insert("M");
+        bst.insert("G");
+        bst.insert("T");
+        bst.insert("B");
+        bst.insert("I");
+        bst.insert("W");
 
         // Standard cases
-        assertEquals("I", bst.inOrderPredecessor("M", comparator), "String pre 1 failed");
-        assertEquals("T", bst.inOrderSuccessor("M", comparator), "String succ 1 failed");
-        assertEquals("G", bst.inOrderPredecessor("I", comparator), "String pre 2 failed");
-        assertEquals("M", bst.inOrderSuccessor("I", comparator), "String succ 2 failed");
+        assertEquals("I", bst.inOrderPredecessor("M"), "String pre 1 failed");
+        assertEquals("T", bst.inOrderSuccessor("M"), "String succ 1 failed");
+        assertEquals("G", bst.inOrderPredecessor("I"), "String pre 2 failed");
+        assertEquals("M", bst.inOrderSuccessor("I"), "String succ 2 failed");
 
         // Edge Cases:
         // 1. Min element ("B") has no predecessor
-        assertNull(bst.inOrderPredecessor("B", comparator), "Min string predecessor should be null");
+        assertNull(bst.inOrderPredecessor("B"), "Min string predecessor should be null");
 
         // 2. Max element ("W") has no successor
-        assertNull(bst.inOrderSuccessor("W", comparator), "Max string successor should be null");
+        assertNull(bst.inOrderSuccessor("W"), "Max string successor should be null");
 
         // 3. Node "T" predecessor is "M", successor is "W"
-        assertEquals("M", bst.inOrderPredecessor("T", comparator));
-        assertEquals("W", bst.inOrderSuccessor("T", comparator));
+        assertEquals("M", bst.inOrderPredecessor("T"));
+        assertEquals("W", bst.inOrderSuccessor("T"));
     }
 
     @Test
     public void testRemove() {
-        bst.insert("M", comparator);
-        bst.insert("G", comparator);
-        bst.insert("T", comparator);
+        bst.insert("M");
+        bst.insert("G");
+        bst.insert("T");
 
-        assertTrue(bst.contains("G", comparator));
-        assertTrue(bst.remove("G", comparator));
-        assertFalse(bst.contains("G", comparator));
-        assertTrue(bst.contains("M", comparator));
+        assertTrue(bst.contains("G"));
+        assertTrue(bst.remove("G"));
+        assertFalse(bst.contains("G"));
+        assertTrue(bst.contains("M"));
     }
 
     @Test
     public void testStringCountingMethods() {
-        BinarySearchTree<String> bst = new BinarySearchTree<>();
+        BinarySearchTree<String> bst = new BinarySearchTree<>(String::compareTo);
         Comparator<String> comparator = String::compareTo;
 
         // Tree Structure:
@@ -126,11 +124,11 @@ public class BinarySearchTreeStringTest {
         //     \        \
         //     "G"       "T"  (duplicates)
 
-        bst.insert("M", comparator);
-        bst.insert("G", comparator);
-        bst.insert("T", comparator);
-        bst.insert("G", comparator); // Duplicate "G"
-        bst.insert("T", comparator); // Duplicate "T"
+        bst.insert("M");
+        bst.insert("G");
+        bst.insert("T");
+        bst.insert("G"); // Duplicate "G"
+        bst.insert("T"); // Duplicate "T"
 
         // 1. Test total node count
         assertEquals(5, bst.countNode(), "Total string node count failed");

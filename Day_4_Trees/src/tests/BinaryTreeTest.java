@@ -10,7 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BinaryTreeTest {
 
     @Nested
+
     class BinaryTreeTestBasics{
+
         @Test
         public void testStringBinaryTreeStrings() {
             // Manually constructing a string binary tree:
@@ -49,7 +51,6 @@ public class BinaryTreeTest {
             assertEquals(1, tree.countNodesWithValues("apple"), "Count for value 'apple' failed");
             assertEquals(0, tree.countNodesWithValues("grape"), "Count for non-existent value failed");
         }
-
 
         @Test
         public void testIntegerBinaryTreeIntegers() {
