@@ -110,6 +110,7 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
         strB.append("]");
         return strB.toString();
     }
+
 //    Overall timeComplexity O(N2)
 //    @Override
 //    public String levelOrderTraversalPerLevel() {
@@ -161,19 +162,13 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
         return strB.toString();
     }
 
-
-
-
     @Override
     public int countNode() {
-        TreeNode<T> rootNode = root;
-        if(root == null) return 0;
-        return  1 + countNodes(rootNode);
+        return countNodes(root);
     }
-
     private int countNodes(TreeNode<T> rootNode){
         if(rootNode == null) return 0;
-        return 1 + countLeaf(rootNode.left) + countLeaf(rootNode.right);
+        return 1 + countNodes(rootNode.left) + countNodes(rootNode.right);
     }
 
     @Override
@@ -194,7 +189,6 @@ public class BinaryTree<T> implements BinaryTreeInterface<T> {
         if(rootNode == null) return 0;
         return countContainValue(rootNode , value);
     }
-
     private int countContainValue(TreeNode<T> rootNode , T value){
         if(rootNode == null) return 0;
         if(Objects.equals(rootNode.data, value)) return 1;

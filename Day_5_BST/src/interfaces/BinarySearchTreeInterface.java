@@ -22,6 +22,10 @@ public interface BinarySearchTreeInterface<T> {
     public String levelOrderTraversal();
     public String levelOrderTraversalPerLevel();
 
-    public TreeNode<T> inOrderPredecessor(T value, Comparator<T> comparator);
-    public TreeNode<T> inOrderSuccessor(T value, Comparator<T> comparator);
+    public T inOrderPredecessor(T value, Comparator<T> comparator);
+    public T inOrderSuccessor(T value, Comparator<T> comparator);
+
+    public int countNode();
+    public int countLeafNodes();
+    public int countNodesWithValues(T value);
 }
