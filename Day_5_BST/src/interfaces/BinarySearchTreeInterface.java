@@ -28,4 +28,8 @@ public interface BinarySearchTreeInterface<T> {
     public int countNode();
     public int countLeafNodes();
     public int countNodesWithValues(T value);
+
+    default String inOrderTraversalIterative(){
+        return "[]";
+    }
 }

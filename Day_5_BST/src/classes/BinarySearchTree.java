@@ -361,4 +361,30 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
         return ifMatchThenAdd + countContainValue(rootNode.left, value) + countContainValue(rootNode.right, value);
     }
 
+    public String inOrderTraversalIterative() {
+        if(root == null) return "[]";
+
+        TreeNode<T> rootNode = root;
+        StringBuilder strB = new StringBuilder("[");
+
+        Stack<TreeNode<T>> st = new Stack<>();
+        st.push(rootNode);
+
+        while(!st.isEmpty()){
+            while(rootNode.left != null){
+                st.push(rootNode.left);
+                rootNode = rootNode.left;
+            }
+            if(st.peek().left == null && st.peek().right == null){
+                strB.append(st.pop().data).append(", ");
+            }
+            if(rootNode.right != null){
+                st.push(rootNode.right);
+                rootNode = rootNode.right;
+            }
+        }
+        strB.append("]");
+        return strB.toString();
+    }
+
 }

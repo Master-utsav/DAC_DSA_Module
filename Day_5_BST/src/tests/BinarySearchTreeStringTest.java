@@ -60,7 +60,7 @@ public class BinarySearchTreeStringTest {
         bst.insert("I");
         bst.insert("W");
 
-        assertEquals("[B, G, I, M, T, W, ]", bst.inOrderTraversal());
+        assertEquals("[B, G, I, M, T, W, ]", bst.inOrderTraversalIterative());
         assertEquals("[M, G, B, I, T, W, ]", bst.preOrderTraversal());
         assertEquals("[B, I, G, W, T, M, ]", bst.postOrderTraversal());
         assertEquals("[M, G, T, B, I, W, ]", bst.levelOrderTraversal());

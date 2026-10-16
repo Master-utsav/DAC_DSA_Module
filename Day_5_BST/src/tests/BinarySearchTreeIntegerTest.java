@@ -63,7 +63,7 @@ public class BinarySearchTreeIntegerTest {
         bst.insert(80);
 
         // Adjust string format expectations based on your exact trailing spacing/commas
-        assertEquals("[20, 30, 40, 50, 70, 80, ]", bst.inOrderTraversal());
+        assertEquals("[20, 30, 40, 50, 70, 80, ]", bst.inOrderTraversalIterative());
         assertEquals("[50, 30, 20, 40, 70, 80, ]", bst.preOrderTraversal());
         assertEquals("[20, 40, 30, 80, 70, 50, ]", bst.postOrderTraversal());
         assertEquals("[50, 30, 70, 20, 40, 80, ]", bst.levelOrderTraversal());
