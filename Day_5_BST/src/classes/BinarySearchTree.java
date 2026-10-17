@@ -364,25 +364,20 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
     public String inOrderTraversalIterative() {
         if(root == null) return "[]";
 
-        TreeNode<T> rootNode = root;
+        TreeNode<T> currentNode = root;
         StringBuilder strB = new StringBuilder("[");
 
         Stack<TreeNode<T>> st = new Stack<>();
-        st.push(rootNode);
-
-        while(!st.isEmpty()){
-            while(rootNode.left != null){
-                st.push(rootNode.left);
-                rootNode = rootNode.left;
+        while(currentNode != null || !st.isEmpty()){
+            while(currentNode != null){
+                st.push(currentNode);
+                currentNode = currentNode.left;
             }
-            if(st.peek().left == null && st.peek().right == null){
-                strB.append(st.pop().data).append(", ");
-            }
-            if(rootNode.right != null){
-                st.push(rootNode.right);
-                rootNode = rootNode.right;
-            }
+            currentNode = st.pop();
+            strB.append(currentNode.data).append(", ");
+            currentNode = currentNode.right;
         }
+
         strB.append("]");
         return strB.toString();
     }
