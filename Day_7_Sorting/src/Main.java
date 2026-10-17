@@ -14,7 +14,5 @@ public class Main {
         sorting.sort(Arrays.asList(11,2,34,5,6,7,81,15), SortingTypes.QUICK_SORT, false);
         sorting.sort(Arrays.asList(11,2,34,5,6,7,81,15), SortingTypes.MERGE_SORT, true);
         sorting.sort(Arrays.asList(11,2,34,5,6,7,81,15), SortingTypes.MERGE_SORT, false);
-
-
     }
 }
