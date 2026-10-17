@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.StringJoiner;
@@ -25,7 +26,7 @@ public class Sorting<T> {
                quickSort(list, isAsc);
             }
             case SortingTypes.MERGE_SORT -> {
-//               mergeSort(list, sortType, isAsc);
+               mergeSort(list, isAsc);
             }
             case SortingTypes.HEAP_SORT -> {
                 System.out.println("no implemented yet");
@@ -119,13 +120,13 @@ public class Sorting<T> {
     }
     private void quickSortAlgo(List<T> list, int start, int end, boolean isAsc){
         if((end - start + 1) <= 1) return;
+
         int pivot = (int) (Math.random() * (end));
         while(pivot < start){
             pivot = (int) (Math.random() * (end));
         }
-//        System.out.println("max idx -> "+ (end) + " Pivot is : " + pivot);
+
         int partitionIndex = partition(list, pivot, start, end, isAsc);
-//        System.out.println("partitionindex " + partitionIndex);
         quickSortAlgo(list, start, partitionIndex - 1, isAsc);
         quickSortAlgo(list, partitionIndex + 1, end, isAsc);
 
@@ -134,7 +135,6 @@ public class Sorting<T> {
         T pivotElement = list.get(pivotIndex);
         int left = start;
         int right = end;
-//        System.out.println("Left -> " + left + "  ||  " + "right -> " + right);
 
         while(left <= right){
             while(left <= right && (isAsc == (comparator.compare(list.get(left), pivotElement) <= 0))){
@@ -146,32 +146,68 @@ public class Sorting<T> {
             if(left < right && (isAsc == comparator.compare(list.get(left), list.get(right)) >= 0)){
                 if(comparator.compare(list.get(left), pivotElement) == 0) pivotIndex = right;
                 if(comparator.compare(list.get(right), pivotElement) == 0) pivotIndex = left;
-//                System.out.println("Swapping -> " + list.get(left) + " || " + list.get(right));
                 T temp = list.get(right);
                 list.set(right, list.get(left));
                 list.set(left, temp);
-//                System.out.println("Afeter swap list is now " + list);
             }
         }
-        // swap the value with right and the pivot
         T temp = isAsc ? list.get(right) : list.get(left);
         list.set(isAsc ? right : left, pivotElement);
         list.set(pivotIndex, temp);
-//        System.out.println("AFter partion call list is now " + list);
         return isAsc ? right : left;
     }
-//
-//
-//
-//    private List<T> mergeSort(List<T> list, SortingTypes sortingTypes, boolean isAsc){
-//
-//    }
-//    private List<T> mergeSortAlgo(){
-//
-//    }
-//    private int merge(){
 
-//    }
+    private void mergeSort(List<T> list, boolean isAsc){
+        System.out.println("Before applying merge sort = " + list);
+        mergeSortAlgo(list, 0, list.size() - 1, isAsc);
+        System.out.println("After applying merge sort " + (isAsc ? "Ascending" : "Descending") + " = " + list);
+    }
+    private void mergeSortAlgo(List<T> list, int start, int end, boolean isAsc){
+        if((end - start + 1) <= 1) return;
+
+        int mid = start + (end - start) / 2;
+        mergeSortAlgo(list, start, mid, isAsc);
+        mergeSortAlgo(list, mid + 1, end, isAsc);
+        merge(list, start, mid, end, isAsc);
+    }
+    private void merge(List<T> list, int start, int mid, int end, boolean isAsc){
+        int firstSubArrayStart = start;
+        int firstSubArrayEnd = mid;
+        int secondSubArrayStart = mid + 1;
+        int secondSubArrayEnd = end;
+
+        List<T> newArray = new ArrayList<>();
+        int iPointer = firstSubArrayStart;
+        int jPointer = secondSubArrayStart;
+
+        while(iPointer <= firstSubArrayEnd && jPointer <= secondSubArrayEnd){
+            while(iPointer <= firstSubArrayEnd && (isAsc == comparator.compare(list.get(iPointer), list.get(jPointer)) <= 0)){
+                newArray.add(list.get(iPointer));
+                iPointer++;
+            }
+            while(jPointer <= secondSubArrayEnd && (isAsc == comparator.compare(list.get(iPointer), list.get(jPointer)) > 0)){
+                newArray.add(list.get(jPointer));
+                jPointer++;
+            }
+        }
+
+        while(iPointer <= firstSubArrayEnd){
+            newArray.add(list.get(iPointer));
+            iPointer++;
+        }
+        while(jPointer <= secondSubArrayEnd){
+            newArray.add(list.get(jPointer));
+            jPointer++;
+        }
+
+        int tempIndex = 0;
+        for(int i = start; i <= end; i++){
+            if(tempIndex > newArray.size()) break;
+            list.set(i, newArray.get(tempIndex));
+            tempIndex++;
+        }
+
+    }
 
 
 

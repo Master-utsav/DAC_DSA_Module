@@ -1,9 +1,5 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         Sorting<Integer> sorting = new Sorting<>(Integer::compareTo);
@@ -16,6 +12,9 @@ public class Main {
         sorting.sort(Arrays.asList(11,2,34,5,6,7,81,15), SortingTypes.INSERTION_SORT, false);
         sorting.sort(Arrays.asList(11,2,34,5,6,7,81,15), SortingTypes.QUICK_SORT, true);
         sorting.sort(Arrays.asList(11,2,34,5,6,7,81,15), SortingTypes.QUICK_SORT, false);
+        sorting.sort(Arrays.asList(11,2,34,5,6,7,81,15), SortingTypes.MERGE_SORT, true);
+        sorting.sort(Arrays.asList(11,2,34,5,6,7,81,15), SortingTypes.MERGE_SORT, false);
+
 
     }
 }
