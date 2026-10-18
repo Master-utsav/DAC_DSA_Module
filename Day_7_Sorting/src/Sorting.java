@@ -11,6 +11,7 @@ public class Sorting<T> {
         this.comparator = comparator;
     }
 
+    // COMMON SORT METHOD
     public void sort(List<T> list, SortingTypes sortType, boolean isAsc){
         switch (sortType){
             case SortingTypes.BUBBLE_SORT -> {
@@ -29,7 +30,7 @@ public class Sorting<T> {
                mergeSort(list, isAsc);
             }
             case SortingTypes.HEAP_SORT -> {
-                System.out.println("no implemented yet");
+                System.out.println("no implemented yet (Not Finished YET");
             }
             default -> {
                 System.out.println("No such SortType Found...");
@@ -37,6 +38,8 @@ public class Sorting<T> {
         }
     }
 
+
+    // BUBBLE SORT
     private void bubbleSort(List<T> list, boolean isAsc){
         System.out.println("Before applying bubble sort = " + list);
         int count = 0;
@@ -58,6 +61,7 @@ public class Sorting<T> {
         System.out.println("Total Iterations = " + count + "  ||  Swap Count = " + swapCount);
     }
 
+    // SELECTION SORT
     private void selectionSort(List<T> list, boolean isAsc){
         System.out.println("Before applying selection sort = " + list);
         int count = 0;
@@ -85,6 +89,8 @@ public class Sorting<T> {
         System.out.println("Total Iterations = " + count + "  ||  Swap Count = " + swapCount);
     }
 
+
+    // INSERTION SORT
     private void insertionSort(List<T> list, boolean isAsc){
         System.out.println("Before applying insertion sort = " + list);
         int sortedCount = 1;
@@ -111,12 +117,11 @@ public class Sorting<T> {
         System.out.println("Total Iterations = " + count + "  ||  Swap Count = " + swapCount);
     }
 
-
+    // QUICK SORT
     private void quickSort(List<T> list, boolean isAsc){
         System.out.println("Before applying Quick sort = " + list);
         quickSortAlgo(list,0, list.size() - 1, isAsc);
         System.out.println("After applying Quick sort " + (isAsc ? "Ascending" : "Descending") + " = " + list);
-//        System.out.println("Total Iterations = " + count + "  ||  Swap Count = " + swapCount);
     }
     private void quickSortAlgo(List<T> list, int start, int end, boolean isAsc){
         if((end - start + 1) <= 1) return;
@@ -157,6 +162,7 @@ public class Sorting<T> {
         return isAsc ? right : left;
     }
 
+    // MERGE SORT
     private void mergeSort(List<T> list, boolean isAsc){
         System.out.println("Before applying merge sort = " + list);
         mergeSortAlgo(list, 0, list.size() - 1, isAsc);
@@ -171,31 +177,27 @@ public class Sorting<T> {
         merge(list, start, mid, end, isAsc);
     }
     private void merge(List<T> list, int start, int mid, int end, boolean isAsc){
-        int firstSubArrayStart = start;
-        int firstSubArrayEnd = mid;
-        int secondSubArrayStart = mid + 1;
-        int secondSubArrayEnd = end;
 
         List<T> newArray = new ArrayList<>();
-        int iPointer = firstSubArrayStart;
-        int jPointer = secondSubArrayStart;
+        int iPointer = start;
+        int jPointer = mid + 1;
 
-        while(iPointer <= firstSubArrayEnd && jPointer <= secondSubArrayEnd){
-            while(iPointer <= firstSubArrayEnd && (isAsc == comparator.compare(list.get(iPointer), list.get(jPointer)) <= 0)){
+        while(iPointer <= mid && jPointer <= end){
+            while(iPointer <= mid && (isAsc == comparator.compare(list.get(iPointer), list.get(jPointer)) <= 0)){
                 newArray.add(list.get(iPointer));
                 iPointer++;
             }
-            while(jPointer <= secondSubArrayEnd && (isAsc == comparator.compare(list.get(iPointer), list.get(jPointer)) > 0)){
+            while(jPointer <= end && (isAsc == comparator.compare(list.get(iPointer), list.get(jPointer)) > 0)){
                 newArray.add(list.get(jPointer));
                 jPointer++;
             }
         }
 
-        while(iPointer <= firstSubArrayEnd){
+        while(iPointer <= mid){
             newArray.add(list.get(iPointer));
             iPointer++;
         }
-        while(jPointer <= secondSubArrayEnd){
+        while(jPointer <= end){
             newArray.add(list.get(jPointer));
             jPointer++;
         }
@@ -206,7 +208,6 @@ public class Sorting<T> {
             list.set(i, newArray.get(tempIndex));
             tempIndex++;
         }
-
     }
 
 }
