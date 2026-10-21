@@ -115,7 +115,6 @@ public class Sorting<T> {
         System.out.println("Before applying Quick sort = " + list);
         quickSortAlgo(list, 0, list.size() - 1, isAsc);
         System.out.println("After applying Quick sort " + (isAsc ? "Ascending" : "Descending") + " = " + list);
-//        System.out.println("Total Iterations = " + count + "  ||  Swap Count = " + swapCount);
     }
 
     private void quickSortAlgo(List<T> list, int start, int end, boolean isAsc) {
@@ -250,6 +249,9 @@ public class Sorting<T> {
             heapify(list, n, target, isAsc);
         }
     }
+
+
+    // Heap sort
 
 
 }
