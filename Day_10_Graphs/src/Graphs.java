@@ -4,9 +4,10 @@ import java.util.List;
 public class Graphs {
 
      public record GraphNode(int node, int weight){};
-     private List<List<GraphNode>> adjacencyMat;
+     private final List<List<GraphNode>> adjacencyMat;
      private int V = 0;
      private boolean isDirected = false;
+
 
      public Graphs(int V, boolean isDirected){
           this.V = V;
@@ -17,6 +18,7 @@ public class Graphs {
           }
      }
 
+
      public  void insert(int u , int v , int w){
          GraphNode newNode = new GraphNode(v, w);
          adjacencyMat.get(u).add(newNode);
@@ -26,19 +28,21 @@ public class Graphs {
          }
      }
 
+
      @Override
      public String toString(){
           StringBuilder str = new StringBuilder();
           for(int i = 0; i < V; i++){
-               str.append(i + " -> ");
+               str.append(i).append(" -> ");
                for(GraphNode g : adjacencyMat.get(i)){
-                    str.append("(" + g.node + ", " + g.weight + "), ");
+                    str.append("(").append(g.node).append(", ").append(g.weight).append("), ");
                }
                str.append("\n");
           }
 
           return str.toString();
      }
+
 
      public void dfs(int startVertex){
           boolean[] isVisited = new boolean[V];
@@ -73,7 +77,6 @@ public class Graphs {
           }
           return count;
      }
-
      public boolean isGraphConnected(){
           boolean[] isVisited = new boolean[V];
           for(int i = 0; i < V; i++){
@@ -85,7 +88,6 @@ public class Graphs {
           }
           return true;
      }
-
      private void dfsCountHelper(int startVertex, boolean[] isVisited){
           if(isVisited[startVertex]) return;
           isVisited[startVertex] = true;

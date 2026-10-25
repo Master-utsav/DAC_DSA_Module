@@ -40,8 +40,9 @@ public class Sorting<T> {
     private void bubbleSort(List<T> list, boolean isAsc) {
         System.out.println("Before applying bubble sort = " + list);
         int count = 0;
-        int swapCount = 0;
+        int totalSwapCount = 0;
         for (int i = 0; i < list.size(); i++) {
+            int swapCount = 0;
             for (int j = 0; j < list.size() - i - 1; j++) {
                 count++;
                 int cmp = comparator.compare(list.get(j), list.get(j + 1));
@@ -52,10 +53,11 @@ public class Sorting<T> {
                     list.set(j, temp);
                 }
             }
+            totalSwapCount += swapCount;
             if (swapCount == 0) break;
         }
         System.out.println("After applying bubble sort " + (isAsc ? "Ascending" : "Descending") + " = " + list);
-        System.out.println("Total Iterations = " + count + "  ||  Swap Count = " + swapCount);
+        System.out.println("Total Iterations = " + count + "  ||  Swap Count = " + totalSwapCount);
     }
 
     private void selectionSort(List<T> list, boolean isAsc) {
