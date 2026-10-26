@@ -251,7 +251,7 @@ public class BinarySearchTree<T> implements BinarySearchTreeInterface<T> {
                 // value is greater than or equal, so explore right part of tree
                 rootNode = rootNode.right;
             } else {
-                // value is less than rootNode, so rootnode is a potential predecessor here
+                // value is less than rootNode, so rootnode is a potential successor here
                 previousNode = rootNode;
                 rootNode = rootNode.left;
             }

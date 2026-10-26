@@ -48,25 +48,21 @@ public class PostFixArithmetics {
                     String operation = expression.get(i);
                     int operand1 = st.pop();
                     int operand2 = st.pop();
-                    if(operation.equals("+")){
-                        st.push(operand2 + operand1);
-                    }
-                    else if(operation.equals("-")){
-                        st.push(operand2 - operand1);
-                    }
-                    else if(operation.equals("*")){
-                        st.push(operand2 * operand1);
-                    }
-                    else if(operation.equals("/")){
-                        if(operand2 == 0){
-                            System.out.println("Dividing zero exception");
+                    switch (operation) {
+                        case "+" -> st.push(operand2 + operand1);
+                        case "-" -> st.push(operand2 - operand1);
+                        case "*" -> st.push(operand2 * operand1);
+                        case "/" -> {
+                            if (operand2 == 0) {
+                                System.out.println("Dividing zero exception");
+                                return 0;
+                            }
+                            st.push(operand2 / operand1);
+                        }
+                        default -> {
+                            System.out.println("Not a valid expression");
                             return 0;
                         }
-                        st.push(operand2 / operand1);
-                    }
-                    else{
-                        System.out.println("Not a valid expression");
-                        return 0;
                     }
                 }
             }
